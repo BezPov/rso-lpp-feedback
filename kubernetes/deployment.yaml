@@ -41,7 +41,7 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 82
+      port: 83
       targetPort: 8080
   selector:
     app: lpp-feedback
