@@ -2,12 +2,25 @@
 
 let mysql = require('mysql');
 
-//TODO: get this from etcd
-module.exports = {
-	get: mysql.createConnection({
-		host: 'lpp-feedback-server.mysql.database.azure.com',
-		user: 'bp@lpp-feedback-server',
-		password: 'bezopovi123!',
-		database: 'lpp-feedback'
-	})
+const etcd = require('./etcd');
+
+module.exports = function () {
+	etcd.get("feedback_db_credentials", (err, res) => {
+		if (err) {
+			console.log(err);
+
+			return;
+		}
+
+		else {
+			let credentials = res.split('||');
+
+			return mysql.createConnection({
+				host: credentials[0],
+				user: credentials[1],
+				password: credentials[2],
+				database:credentials[3]
+			});
+		}
+	});
 };

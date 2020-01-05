@@ -13,7 +13,7 @@ spec:
         app: lpp-feedback
     spec:
       containers:
-        - image: bezpov/lpp-feedback:1.0.7
+        - image: bezpov/lpp-feedback:1.0.8
           name: lpp-feedback-container
           env:
             - name: ETCD_SERVER
