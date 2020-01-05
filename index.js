@@ -1,4 +1,12 @@
 const restify = require('restify');
+const corsMiddleware = require('restify-cors-middleware');
+
+let cors = corsMiddleware({
+    preflightMaxAge: 5,
+    origins: ['*'],
+    allowHeaders:['X-App-Version'],
+    exposeHeaders: []
+});
 
 const logger = require('./services/logging');
 
@@ -13,6 +21,9 @@ const server = restify.createServer(options);
 
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.bodyParser());
+
+server.pre(cors.preflight);
+server.use(cors.actual);
 
 server.get('/', (req, res, next) => {
     res.json({
