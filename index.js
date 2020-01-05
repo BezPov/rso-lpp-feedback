@@ -29,7 +29,7 @@ server.get('/', (req, res, next) => {
     res.json({
         name: 'lpp-feedback',
         version: process.env.npm_package_version,
-        description: 'Api gateway'
+        description: 'Handles feedback from passengers'
     });
 
     return next();
@@ -38,6 +38,8 @@ server.get('/', (req, res, next) => {
 require('./routes/healthRoutes')(server);
 require('./routes/metricsRoutes')(server);
 require('./routes/etcdRoutes')(server);
+
+require('./api/feedback')(server);
 
 server.listen(8080, () => {
     console.log(`${options.name} ${options.version} listening at ${server.url}`);
